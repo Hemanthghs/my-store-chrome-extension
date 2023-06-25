@@ -11,6 +11,7 @@ const contentEle = document.getElementsByClassName("content")[0];
 const copyEle = document.getElementsByClassName("copy")[0];
 const msgEle = document.getElementsByClassName("msg")[0];
 const deleteEle = document.getElementsByClassName("delete")[0];
+const saveTabBtnEle = document.getElementsByClassName("save-tab-btn")[0];
 
 let data = [];
 
@@ -42,6 +43,11 @@ function renderData(totalData) {
 }
 
 for (var i = 0; i < myValEle.length; i++) {
+  myValEle[i].ondblclick = function () {
+    if (this.innerText.startsWith("http")) {
+      window.open(this.innerText, (target = "_blank"));
+    }
+  };
   myValEle[i].onclick = function () {
     const copyText = this.innerText;
     navigator.clipboard.writeText(copyText);
@@ -97,4 +103,10 @@ delBtnEle.addEventListener("dblclick", function () {
   localStorage.clear();
   data = [];
   renderData(data);
+});
+
+saveTabBtnEle.addEventListener("click", function () {
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    setData(tabs[0].title, tabs[0].url);
+  });
 });

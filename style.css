@@ -83,22 +83,21 @@ body {
   font-size: 18px;
   padding: 2px 4px;
   border-radius: 2px;
+  border: none;
+  color: white;
+  height: 24px;
 }
 
 .buttons button:hover {
   cursor: pointer;
 }
 
-.save-btn {
+.save-btn, .save-tab-btn {
   background-color: blue;
-  border: none;
-  color: white;
 }
 
 .delete-btn {
   background-color: red;
-  border: none;
-  color: white;
 }
 
 /* buttons styling end */
