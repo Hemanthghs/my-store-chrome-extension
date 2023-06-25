@@ -20,7 +20,7 @@ body {
 }
 
 .root {
-  width: 450px;
+  min-width: 450px;
 }
 
 .title {
@@ -174,7 +174,8 @@ input:checked + .slider:before {
   max-width: 300px;
 }
 
-.key-value div {
+.key-value .my-key,
+.key-value .my-value {
   text-align: center;
   margin: 4px 4px;
   background-color: #413f45;
@@ -186,17 +187,62 @@ input:checked + .slider:before {
   text-overflow: ellipsis;
 }
 
-.key-value div:hover {
+.key-value .my-key:hover,
+.key-value .my-value:hover {
   cursor: pointer;
   background-color: #313034;
 }
 
-.key-value-light div {
+.key-value-light .my-key,
+.key-value-light .my-value {
   background-color: #e7e7e7;
   color: black;
 }
 
-.key-value-light div:hover {
-    background-color: #d3d3d3;
-    color: black;
-  }
+.key-value-light .my-key:hover,
+.key-value-light .my-value:hover {
+  background-color: #d3d3d3;
+  color: black;
+}
+
+.tooltip {
+  position: relative;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  background-color: #e7e7e7;
+  color: black;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 2px;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  left: 54px;
+  bottom: 24px;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #e7e7e7 transparent transparent transparent;
+}
+
+.tooltip-light .tooltip .tooltiptext::after {
+  border-color: #000000 transparent transparent transparent;
+} 
+.tooltip-light .tooltip .tooltiptext {
+  background-color: #000000;
+  color: white;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
