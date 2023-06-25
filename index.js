@@ -22,24 +22,6 @@ if (localData) {
   renderData(localData);
 }
 
-setDataTheme();
-
-function setDataTheme() {
-  const theme = localStorage.getItem("theme");
-  if (theme == "light") {
-    changeMode();
-    for (let i = 0; i < keyValEle?.length; i += 1) {
-      if (!keyValEle.item(i).classList.contains("key-value-light")) {
-        keyValEle.item(i).classList.toggle("key-value-light");
-      }
-      if (!keyValEle.item(i).classList.contains("tooltip-light")) {
-        keyValEle.item(i).classList.toggle("tooltip-light");
-      }
-    }
-    modeBtnEle.checked = false;
-  }
-}
-
 function renderData(totalData) {
   copyMsg();
   let content = "";
@@ -57,22 +39,7 @@ function renderData(totalData) {
     }
   }
   contentEle.innerHTML = content;
-  changeMode();
-  setDataTheme();
 }
-
-modeBtnEle.addEventListener("change", function () {
-  changeMode();
-  for (let i = 0; i < keyValEle.length; i += 1) {
-    keyValEle.item(i).classList.toggle("key-value-light");
-    keyValEle.item(i).classList.toggle("tooltip-light");
-  }
-  if (modeBtnEle.checked) {
-    localStorage.setItem("theme", "dark");
-  } else {
-    localStorage.setItem("theme", "light");
-  }
-});
 
 for (var i = 0; i < myValEle.length; i++) {
   myValEle[i].onclick = function () {
@@ -107,25 +74,6 @@ saveBtnEle.addEventListener("click", function () {
     }, 1000);
   }
 });
-
-function changeMode() {
-  const theme = localStorage.getItem("theme");
-  if(theme == "light") {
-    if(!mainEle.classList.contains("light-mode")) {
-      mainEle.classList.toggle("light-mode");
-    }
-    if(!bodyEle.classList.contains("light-mode")) {
-      bodyEle.classList.toggle("light-mode");
-    }
-  } else {
-    if(!mainEle.classList.contains("dark-mode")) {
-      mainEle.classList.toggle("dark-mode");
-    }
-    if(!bodyEle.classList.contains("dark-mode")) {
-      bodyEle.classList.toggle("dark-mode");
-    }
-  }
-}
 
 function copyMsg() {
   let localData = JSON.parse(localStorage.getItem("mydata"));

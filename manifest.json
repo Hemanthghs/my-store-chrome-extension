@@ -3,6 +3,7 @@
     "version":"1",
     "name":"My Store",
     "action":{
-        "default_popup":"index.html"
+        "default_popup":"index.html",
+        "default_icon":"icon.png"
     }
 }
