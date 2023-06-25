@@ -1,17 +1,76 @@
 const mainEle = document.getElementById("main");
 const keyValEle = document.getElementsByClassName("key-value");
 const modeBtnEle = document.getElementById("mode");
-const bodyEle = document.getElementById('body');
-const myValEle = document.getElementsByClassName('my-value');
+const bodyEle = document.getElementById("body");
+const myValEle = document.getElementsByClassName("my-value");
+const saveBtnEle = document.getElementsByClassName("save-btn")[0];
+const delBtnEle = document.getElementsByClassName("delete-btn")[0];
+const keyEle = document.getElementById("key");
+const valEle = document.getElementById("value");
+const contentEle = document.getElementsByClassName("content")[0];
+const copyEle = document.getElementsByClassName("copy")[0];
+const msgEle = document.getElementsByClassName("msg")[0];
+const deleteEle = document.getElementsByClassName("delete")[0];
+
+let data = [];
+
+let localData = JSON.parse(localStorage.getItem("mydata"));
+copyMsg();
+
+if (localData) {
+  data = localData;
+  renderData(localData);
+}
+
+setDataTheme();
+
+function setDataTheme() {
+  const theme = localStorage.getItem("theme");
+  if (theme == "light") {
+    changeMode();
+    for (let i = 0; i < keyValEle?.length; i += 1) {
+      if (!keyValEle.item(i).classList.contains("key-value-light")) {
+        keyValEle.item(i).classList.toggle("key-value-light");
+      }
+      if (!keyValEle.item(i).classList.contains("tooltip-light")) {
+        keyValEle.item(i).classList.toggle("tooltip-light");
+      }
+    }
+    modeBtnEle.checked = false;
+  }
+}
+
+function renderData(totalData) {
+  copyMsg();
+  let content = "";
+  for (let i = 0; i < totalData.length; i++) {
+    if (totalData[i]?.value?.length) {
+      content += `
+      <div class="key-value">
+      <div class="tooltip">
+        <div class="my-key">${totalData[i]?.key || "no-key"}</div>
+        <span class="tooltiptext">${totalData[i].key}</span>
+      </div>
+      <div class="my-value">${totalData[i].value}</div>
+    </div>
+      `;
+    }
+  }
+  contentEle.innerHTML = content;
+  changeMode();
+  setDataTheme();
+}
 
 modeBtnEle.addEventListener("change", function () {
-  mainEle.classList.toggle("light-mode");
-  mainEle.classList.toggle("dark-mode");
-  bodyEle.classList.toggle("light-mode");
-  bodyEle.classList.toggle("dark-mode");
+  changeMode();
   for (let i = 0; i < keyValEle.length; i += 1) {
     keyValEle.item(i).classList.toggle("key-value-light");
     keyValEle.item(i).classList.toggle("tooltip-light");
+  }
+  if (modeBtnEle.checked) {
+    localStorage.setItem("theme", "dark");
+  } else {
+    localStorage.setItem("theme", "light");
   }
 });
 
@@ -19,6 +78,75 @@ for (var i = 0; i < myValEle.length; i++) {
   myValEle[i].onclick = function () {
     const copyText = this.innerText;
     navigator.clipboard.writeText(copyText);
+    copyEle.innerHTML = `<b>Copied...!</b>`;
+    setTimeout(() => {
+      copyEle.innerHTML = `Click the value to copy`;
+    }, 500);
+  };
+}
+
+saveBtnEle.addEventListener("click", function () {
+  const key = keyEle.value;
+  const value = valEle.value;
+  if (value?.length) {
+    setData(key, value);
+    keyEle.value = "";
+    valEle.value = "";
+    msgEle.classList.toggle("danger");
+    msgEle.innerText = "Value added";
+    setTimeout(() => {
+      msgEle.classList.toggle("danger");
+      msgEle.innerText = ``;
+    }, 1000);
+  } else {
+    msgEle.classList.toggle("success");
+    msgEle.innerText = "Value is empty...!";
+    setTimeout(() => {
+      msgEle.classList.toggle("success");
+      msgEle.innerText = ``;
+    }, 1000);
+  }
+});
+
+function changeMode() {
+  const theme = localStorage.getItem("theme");
+  if(theme == "light") {
+    if(!mainEle.classList.contains("light-mode")) {
+      mainEle.classList.toggle("light-mode");
+    }
+    if(!bodyEle.classList.contains("light-mode")) {
+      bodyEle.classList.toggle("light-mode");
+    }
+  } else {
+    if(!mainEle.classList.contains("dark-mode")) {
+      mainEle.classList.toggle("dark-mode");
+    }
+    if(!bodyEle.classList.contains("dark-mode")) {
+      bodyEle.classList.toggle("dark-mode");
+    }
   }
 }
 
+function copyMsg() {
+  let localData = JSON.parse(localStorage.getItem("mydata"));
+  if (!localData) {
+    copyEle.innerHTML = "<b>- No data -</b>";
+  } else {
+    copyEle.innerText = "Click on value to copy";
+  }
+}
+
+function setData(key, value) {
+  data.push({
+    key: key,
+    value: value,
+  });
+  localStorage.setItem("mydata", JSON.stringify(data));
+  renderData(data);
+}
+
+delBtnEle.addEventListener("dblclick", function () {
+  localStorage.clear();
+  data = [];
+  renderData(data);
+});
