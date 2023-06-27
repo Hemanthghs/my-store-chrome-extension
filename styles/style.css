@@ -32,7 +32,7 @@ body {
 }
 
 .dark-mode {
-  background-color: #09090a;
+  background-color: #121212;
   color: white;
 }
 
@@ -179,3 +179,25 @@ body {
   text-align: center;
   margin-top: 2px;
 }
+
+footer {
+  text-align: center;
+  margin-top: 16px;
+  padding-bottom: 6px;
+  font-size: 14px;
+}
+
+footer .heart-icon {
+  color: red;
+}
+
+footer a {
+  color: blue;
+  text-decoration: none;
+}
+
+footer a:visited {
+  color: blue;
+}
+
+/* #121212 */
