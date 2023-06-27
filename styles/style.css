@@ -92,7 +92,8 @@ body {
   cursor: pointer;
 }
 
-.save-btn, .save-tab-btn {
+.save-btn,
+.save-tab-btn {
   background-color: blue;
 }
 
@@ -189,6 +190,7 @@ footer {
 
 footer .heart-icon {
   color: red;
+  font-size: 10px;
 }
 
 footer a {
@@ -200,4 +202,13 @@ footer a:visited {
   color: blue;
 }
 
-/* #121212 */
+.heart-icon {
+  animation: beat 0.4s infinite alternate;
+  transform-origin: center;
+}
+
+@keyframes beat {
+  to {
+    transform: scale(1.3);
+  }
+}
