@@ -3,8 +3,8 @@
     "version":"1",
     "name":"My Store",
     "action":{
-        "default_popup":"index.html",
-        "default_icon":"icon.png"
+        "default_popup":"mystore.html",
+        "default_icon":"images/icon.png"
     },
     "permissions":[
         "tabs"
