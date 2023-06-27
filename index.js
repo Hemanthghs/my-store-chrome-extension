@@ -40,22 +40,25 @@ function renderData(totalData) {
     }
   }
   contentEle.innerHTML = content;
+  setClickListener();
 }
 
-for (var i = 0; i < myValEle.length; i++) {
-  myValEle[i].ondblclick = function () {
-    if (this.innerText.startsWith("http")) {
-      window.open(this.innerText, (target = "_blank"));
-    }
-  };
-  myValEle[i].onclick = function () {
-    const copyText = this.innerText;
-    navigator.clipboard.writeText(copyText);
-    copyEle.innerHTML = `<b>Copied...!</b>`;
-    setTimeout(() => {
-      copyEle.innerHTML = `Click the value to copy`;
-    }, 500);
-  };
+function setClickListener() {
+  for (var i = 0; i < myValEle.length; i++) {
+    myValEle[i].ondblclick = function () {
+      if (this.innerText.startsWith("http")) {
+        window.open(this.innerText, (target = "_blank"));
+      }
+    };
+    myValEle[i].addEventListener("click", function () {
+      const copyText = this.innerText;
+      navigator.clipboard.writeText(copyText);
+      copyEle.innerHTML = `<b>Copied...!</b>`;
+      setTimeout(() => {
+        copyEle.innerHTML = `Click the value to copy`;
+      }, 500);
+    });
+  }
 }
 
 saveBtnEle.addEventListener("click", function () {
@@ -79,6 +82,7 @@ saveBtnEle.addEventListener("click", function () {
       msgEle.innerText = ``;
     }, 1000);
   }
+  setClickListener();
 });
 
 function copyMsg() {
@@ -109,4 +113,10 @@ saveTabBtnEle.addEventListener("click", function () {
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     setData(tabs[0].title, tabs[0].url);
   });
+  msgEle.classList.toggle("danger");
+  msgEle.innerText = "Value added";
+  setTimeout(() => {
+    msgEle.classList.toggle("danger");
+    msgEle.innerText = ``;
+  }, 1000);
 });
