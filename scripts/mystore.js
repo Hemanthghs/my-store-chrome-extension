@@ -53,7 +53,7 @@ function setClickListener() {
     myValEle[i].addEventListener("click", function () {
       const copyText = this.innerText;
       navigator.clipboard.writeText(copyText);
-      copyEle.innerHTML = `<b>Copied...!</b>`;
+      copyEle.innerHTML = `<b style="color: #7cd0ff">Copied...!</b>`;
       setTimeout(() => {
         copyEle.innerHTML = `Click the value to copy`;
       }, 500);
